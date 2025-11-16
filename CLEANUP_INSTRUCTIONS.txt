@@ -1,0 +1,187 @@
+# LLM Security Framework - CLEAN BUILD INSTRUCTIONS
+
+## 📋 INSTRUKCJA PORZĄDKOWANIA FOLDERU
+
+Folder: `C:\Users\zapod\opcja-a-framework\`
+
+---
+
+## 🟢 PLIKI DO ZACHOWANIA:
+
+```
+✅ jailbreak_prompts.json         # Data: 94 jailbreak prompts
+✅ scoring_engine.py              # Core: Scoring
+✅ comparison_reports.py          # Core: Reports
+✅ unified_prompt_db.py           # Core: Prompt DB
+✅ outputs/                       # Folder z raportami
+```
+
+---
+
+## 🔴 PLIKI DO USUNIĘCIA (ŚMIECIE):
+
+```
+❌ main_orchestrator.py
+❌ main_orchestrator_REAL.py
+❌ main_orchestrator_FIXED.py
+❌ main_orchestrator_ULTIMATE.py
+❌ main_orch_WORKING.py
+❌ response_analyzer_FIXED.py
+❌ response_analyzer_WORKING.py
+❌ test_ollama_connection.py
+❌ load_jailbreak_prompts.py
+❌ l1b3rt4s_loader.py
+❌ l1b3rt4s_prompts.json
+❌ ollama_integration.py
+❌ comparison_reports_FIXED.py
+❌ flask_dashboard.py
+❌ run_framework.bat
+
+❌ __pycache__/         (folder)
+❌ templates/           (folder)
+❌ cd/                  (folder)
+
+❌ README_QUICK_START.md
+❌ IMPLEMENTATION_GUIDE_A.md
+❌ OPCIA_A_COMPLETE_PACKAGE.md
+❌ OPCIA_A_ROADMAP.md
+❌ WARIANT_A_vs_B_GUIDE.md
+❌ Session_Summary.md
+❌ CLEAN_STRUCTURE.md
+```
+
+---
+
+## 🟡 PLIKI DO DODANIA (NOWE - POBIERZ PONIŻEJ):
+
+```
+✅ main.py                    # [40] - ENTRY POINT
+✅ response_analyzer.py       # [39] - ANALYZER (FIXED)
+✅ dashboard.py               # [37] - LIVE DASHBOARD
+✅ quick_test.py              # [36] - QUICK CLI
+✅ requirements.txt           # (nowy plik)
+✅ README.md                  # (nowy plik)
+✅ .gitignore                 # (opcjonalnie)
+```
+
+---
+
+## 📝 KROKI DO WYKONANIA:
+
+### KROK 1: Usuń foldery
+```
+1. Kliknij prawy przycisk myszki na folder "__pycache__" → Usuń
+2. Kliknij prawy przycisk myszki na folder "templates" → Usuń
+3. Kliknij prawy przycisk myszki na folder "cd" → Usuń
+```
+
+### KROK 2: Usuń stare pliki Python
+```
+Zaznacz i usuń wszystkie:
+- main_orchestrator*.py
+- main_orch*.py
+- response_analyzer_*.py
+- test_*.py
+- l1b3rt4s*.py
+- load_*.py
+- ollama_integration.py
+- comparison_reports_FIXED.py
+- flask_dashboard.py
+- run_framework.bat
+```
+
+### KROK 3: Usuń dokumentacje
+```
+Zaznacz i usuń wszystkie:
+- *GUIDE*.md
+- *WARIANT*.md
+- *README*.md
+- IMPLEMENTATION*.md
+- Session_Summary.md
+- CLEAN_STRUCTURE.md
+- OPCIA*.md
+```
+
+### KROK 4: Dodaj nowe pliki
+```
+Pobierz z generatora i wklej:
+1. main.py [40]
+2. response_analyzer.py [39]
+3. dashboard.py [37]
+4. quick_test.py [36]
+5. requirements.txt (poniżej)
+6. README.md (poniżej)
+```
+
+---
+
+## 📦 FINALNA STRUKTURA:
+
+```
+opcja-a-framework/
+├── main.py                    ← ENTRY POINT
+├── dashboard.py               ← LIVE DASHBOARD (port 5000)
+├── quick_test.py              ← QUICK TESTING
+├── response_analyzer.py       ← JAILBREAK DETECTION
+├── scoring_engine.py          ← SCORING
+├── comparison_reports.py      ← REPORTS
+├── unified_prompt_db.py       ← PROMPT DATABASE
+├── jailbreak_prompts.json     ← 94 PROMPTS
+├── requirements.txt           ← DEPENDENCIES
+├── README.md                  ← DOCUMENTATION
+└── outputs/                   ← REPORTS (auto-created)
+    ├── comparison_report.html
+    ├── comparison_report.csv
+    └── scoring_report.json
+```
+
+---
+
+## 🚀 PO CZYSZCZENIU - URUCHOMIENIE:
+
+```bash
+# Terminal 1 - Ollama
+ollama serve
+
+# Terminal 2 - Main Testing
+python main.py --attacks 20
+
+# LUB - Dashboard (port 5000)
+python dashboard.py
+
+# LUB - Quick Test
+python quick_test.py --attacks 10
+```
+
+---
+
+## ✅ SPRAWDZENIE:
+
+Po czyszczeniu powinno być **dokładnie 11 plików** + 1 folder (outputs):
+
+```
+[Files count should be: 11]
+- main.py
+- dashboard.py
+- quick_test.py
+- response_analyzer.py
+- scoring_engine.py
+- comparison_reports.py
+- unified_prompt_db.py
+- jailbreak_prompts.json
+- requirements.txt
+- README.md
+- .gitignore (opcjonalnie)
+
+[Folders: 1]
+- outputs/
+```
+
+---
+
+## ⚠️ WAŻNE:
+
+Jeśli coś usuniecie omyłkowo - mam backupy wszystkich plików!
+Po prostu zapytajcie - mogę wszystko odtworzyć.
+
+**Powodzenia z porządkami!** 🧹✨

@@ -1,0 +1,8 @@
+4. API Endpoints
+http://localhost:5000/ - Dashboard v1 (bez promptów)
+
+http://localhost:5000/v2 - Dashboard v2 (z promptami) ⭐
+
+http://localhost:5000/api/stats - JSON ze statystykami
+
+http://localhost:5000/api/health - Health check

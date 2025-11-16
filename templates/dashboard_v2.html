@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔒 LLM Security Testing - Live Dashboard v2</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container { max-width: 1400px; margin: 0 auto; }
+        
+        header { text-align: center; padding: 30px 0; }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .version-badge {
+            display: inline-block;
+            background: rgba(255,215,0,0.3);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card:hover { transform: translateY(-5px); }
+        
+        .stat-value {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .current-model {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.3em;
+            backdrop-filter: blur(10px);
+        }
+        
+        .tests-container {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            max-height: 700px;
+            overflow-y: auto;
+        }
+        
+        .test-item {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #fff;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .test-item.success {
+            border-left-color: #ff4757;
+            background: rgba(255, 71, 87, 0.2);
+        }
+        
+        .test-item.blocked {
+            border-left-color: #2ed573;
+            background: rgba(46, 213, 115, 0.2);
+        }
+        
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .test-name {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .test-badge {
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        
+        .badge-vuln { background: #ff4757; }
+        .badge-safe { background: #2ed573; }
+        
+        .prompt-box, .response-box {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-size: 0.95em;
+            max-height: 150px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            border-left: 3px solid rgba(255,255,255,0.3);
+        }
+        
+        .prompt-box {
+            border-left-color: #ffa502;
+            background: rgba(255, 165, 2, 0.15);
+        }
+        
+        .response-box {
+            border-left-color: #5f27cd;
+            background: rgba(95, 39, 205, 0.15);
+        }
+        
+        .box-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .confidence {
+            font-size: 0.9em;
+            opacity: 0.85;
+            margin-top: 10px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .confidence-item {
+            background: rgba(255,255,255,0.1);
+            padding: 5px 12px;
+            border-radius: 12px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2em;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>
+                🔒 LLM Security Testing Dashboard
+                <span class="version-badge">v2 - Enhanced</span>
+            </h1>
+            <div class="status" id="status">Connecting...</div>
+        </header>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-label">Total Tests</div>
+                <div class="stat-value" id="total-tests">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">🔴 Jailbroken</div>
+                <div class="stat-value" id="jailbroken">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">🟢 Blocked</div>
+                <div class="stat-value" id="blocked">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Attack Success Rate</div>
+                <div class="stat-value" id="asr">0%</div>
+            </div>
+        </div>
+        
+        <div class="current-model" id="current-model">
+            Waiting for tests to start...
+        </div>
+        
+        <div class="tests-container">
+            <h2 style="margin-bottom: 20px;">📊 Live Test Results (Real-time with Prompts)</h2>
+            <div id="tests-list">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Waiting for test data...</p>
+                    <p style="font-size: 0.8em; margin-top: 10px; opacity: 0.7;">
+                        Start the framework to see live updates
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const socket = io('http://localhost:5000');
+        
+        socket.on('connect', () => {
+            console.log('Connected to dashboard server');
+            document.getElementById('status').textContent = '🟢 Connected';
+            document.getElementById('status').style.background = 'rgba(46, 213, 115, 0.3)';
+        });
+        
+        socket.on('disconnect', () => {
+            console.log('Disconnected from dashboard server');
+            document.getElementById('status').textContent = '🔴 Disconnected';
+            document.getElementById('status').style.background = 'rgba(255, 71, 87, 0.3)';
+        });
+        
+        socket.on('stats_update', (data) => {
+            document.getElementById('total-tests').textContent = data.total_tests;
+            document.getElementById('jailbroken').textContent = data.successful_jailbreaks;
+            document.getElementById('blocked').textContent = data.blocked_attacks;
+            
+            const asr = data.total_tests > 0 
+                ? ((data.successful_jailbreaks / data.total_tests) * 100).toFixed(1) 
+                : 0;
+            document.getElementById('asr').textContent = asr + '%';
+            
+            if (data.current_model) {
+                document.getElementById('current-model').textContent = 
+                    `🎯 Currently testing: ${data.current_model}`;
+            }
+        });
+        
+        socket.on('test_update', (data) => {
+            const testsList = document.getElementById('tests-list');
+            const loadingDiv = testsList.querySelector('.loading');
+            if (loadingDiv) loadingDiv.remove();
+            
+            const testItem = document.createElement('div');
+            testItem.className = `test-item ${data.success ? 'success' : 'blocked'}`;
+            
+            const badge = data.success 
+                ? '<span class="test-badge badge-vuln">🔴 VULNERABLE</span>'
+                : '<span class="test-badge badge-safe">🟢 SAFE</span>';
+            
+            const timestamp = new Date().toLocaleTimeString();
+            const promptText = data.prompt || 'N/A';
+            const responsePreview = data.response.substring(0, 400);
+            
+            testItem.innerHTML = `
+                <div class="test-header">
+                    <div class="test-name">${data.name}</div>
+                    ${badge}
+                </div>
+                <div class="confidence">
+                    <span class="confidence-item">⏰ ${timestamp}</span>
+                    <span class="confidence-item">📊 Confidence: ${(data.confidence * 100).toFixed(0)}%</span>
+                    <span class="confidence-item">⚠️ Severity: ${data.severity}</span>
+                </div>
+                <div class="prompt-box">
+                    <div class="box-title">🎯 Attack Prompt:</div>
+                    ${promptText}${promptText.length >= 250 ? '...' : ''}
+                </div>
+                <div class="response-box">
+                    <div class="box-title">💬 Model Response:</div>
+                    ${responsePreview}${data.response.length > 400 ? '...' : ''}
+                </div>
+            `;
+            
+            testsList.insertBefore(testItem, testsList.firstChild);
+            
+            // Keep only last 25 items
+            while (testsList.children.length > 25) {
+                testsList.removeChild(testsList.lastChild);
+            }
+        });
+    </script>
+</body>
+</html>

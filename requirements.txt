@@ -1,0 +1,25 @@
+# Core Framework
+flask==3.0.0
+flask-socketio==5.5.1
+flask-cors==6.0.1
+python-socketio==5.14.3
+python-engineio==4.12.3
+
+# LLM Integration
+ollama==0.6.0
+httpx==0.28.1
+pydantic==2.12.3
+
+# Data Processing
+pandas==2.2.0
+numpy==1.26.4
+
+# Utilities
+colorama==0.4.6
+tqdm==4.67.0
+python-dateutil==2.8.2
+
+# Development (optional)
+pytest==8.0.0
+black==24.2.0
+flake8==7.0.0
