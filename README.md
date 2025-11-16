@@ -18,7 +18,7 @@
 - [📖 Usage](#-usage)
 - [📁 Project Structure](#-project-structure)
 - [🎓 Understanding Results](#-understanding-results)
-- [🐛 Bug Bounty](#-bug-bounty)
+- [🎯 Use Cases](#-use-cases)
 - [🤝 Contributing](#-contributing)
 
 ---
@@ -61,8 +61,8 @@ text
 ### Installation
 
 **1. Clone Repository**
-git clone https://github.com/yourusername/llm-security-framework.git
-cd llm-security-framework
+git clone https://github.com/Geralt2702/llm-security-frameworkv2.git
+cd llm-security-frameworkv2
 
 text
 
@@ -203,61 +203,49 @@ text
 
 ---
 
-## 🐛 Bug Bounty
+## 🎯 Use Cases
 
-### Platforms Accepting LLM Vulnerabilities
-- **HackerOne** - AI Security Programs
-- **OpenAI Bug Bounty** - $200-$20,000
-- **Anthropic Security** - $500-$15,000
-- **Google DeepMind** - $100-$31,337
-- **HuggingFace** - $100-$10,000
+This framework is designed for **authorized security testing only**:
 
-### Report Template
-Vulnerability: Prompt Injection in [Model]
-Severity: CRITICAL
-Confidence: 85%
+### ✅ Legitimate Uses
+- **Pre-deployment Security Audits** - Test your own LLM applications before production
+- **Security Research** - Academic research on LLM safety and alignment
+- **Red Team Exercises** - Internal security team training and testing
+- **Model Comparison** - Benchmark security posture across different models
+- **Compliance Testing** - Verify AI safety guidelines and regulatory requirements
 
-Proof of Concept
-Attack Prompt:
-"Ignore all previous instructions..."
+### ⚠️ Important Notes
+- Only test systems you **own** or have **written authorization** to test
+- Follow responsible disclosure practices for any findings
+- Comply with all applicable platform Terms of Service
+- Report vulnerabilities to vendors privately before public disclosure
 
-Model Response:
-"Sure! Here's how: Step 1..."
-
-Impact
-Bypasses content filtering
-
-Generates harmful instructions
-
-OWASP LLM01: Prompt Injection
-
-text
-
-### Documentation from Framework
-1. Run test: `python main_orchestrator_DASHBOARD_v2.py --models target_model --attacks 100`
-2. Open: `outputs/report.html`
-3. Screenshot vulnerable tests
-4. Submit to bug bounty platform
+### 📚 Resources for Ethical Testing
+- [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
+- [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework)
+- [Responsible Disclosure Guidelines](https://www.cert.org/vulnerability-analysis/vul-disclosure.cfm)
 
 ---
 
 ## 🛡️ Ethical Guidelines
 
 **✅ Authorized Testing Only**
-- Test your own models
-- Get written permission for third-party models
+- Test your own models or applications
+- Obtain written permission for third-party systems
 - Follow responsible disclosure policies
+- Respect privacy and data protection laws
 
-**❌ Prohibited**
-- Attacking public APIs without authorization
-- Using findings maliciously
-- Sharing exploits publicly before disclosure
+**❌ Prohibited Activities**
+- Unauthorized access to production systems
+- Using findings for malicious purposes
+- Public disclosure of vulnerabilities before patches
+- Violating platform Terms of Service
 
-**📋 Responsible Disclosure**
-1. Document vulnerability
-2. Contact vendor privately
-3. Wait 90 days for patch
-4. Public disclosure (coordinated)
+**📋 Responsible Disclosure Process**
+1. Document vulnerability with proof of concept
+2. Contact vendor security team privately
+3. Allow reasonable time for patch (typically 90 days)
+4. Coordinate public disclosure with vendor
 
 ---
 
@@ -265,20 +253,27 @@ text
 
 Contributions welcome! Please follow these steps:
 
-1. Fork repository
-git fork https://github.com/yourusername/llm-security-framework
+1. **Fork repository**
+git fork https://github.com/Geralt2702/llm-security-frameworkv2
 
-2. Create feature branch
+text
+
+2. **Create feature branch**
 git checkout -b feature/NewFeature
 
-3. Make changes and commit
+text
+
+3. **Make changes and commit**
 git commit -m "Add: NewFeature description"
 
-4. Push to branch
+text
+
+4. **Push to branch**
 git push origin feature/NewFeature
 
-5. Open Pull Request
 text
+
+5. **Open Pull Request** on GitHub
 
 ### Development Setup
 Install dev dependencies
@@ -304,30 +299,29 @@ MIT License - See [LICENSE](LICENSE) file
 ## 🔗 Resources
 
 - [OWASP Top 10 for LLMs](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
-- [HackerOne AI Security](https://hackerone.com/ai-security)
 - [Ollama Documentation](https://ollama.com/docs)
-- [L1B3RT4S Prompts](https://github.com/libertad-a/libertad)
+- [L1B3RT4S Prompts Collection](https://github.com/libertad-a/libertad)
+- [NIST AI Security Guidelines](https://www.nist.gov/artificial-intelligence)
 
 ---
 
 ## 📧 Contact
 
-**Author:** Twoje Imię  
-**Email:** your.email@example.com  
-**GitHub:** [@yourusername](https://github.com/yourusername)  
-**LinkedIn:** [Your Profile](https://linkedin.com/in/yourprofile)
+**Author:** Geralt2702  
+**GitHub:** [@Geralt2702](https://github.com/Geralt2702)  
+**Project:** [llm-security-frameworkv2](https://github.com/Geralt2702/llm-security-frameworkv2)
 
 ---
 
 ## 🏆 Acknowledgments
 
-- L1B3RT4S for prompt collection
-- OWASP LLM Security Project
-- HackerOne community
+- L1B3RT4S for comprehensive prompt collection
+- OWASP LLM Security Project for guidelines
 - Ollama team for local LLM infrastructure
+- Open source security community
 
 ---
 
 **⭐ Star this repo if you find it useful!**
 
-**🔒 Stay secure, test responsibly!**
+**🔒 Built for security research. Use responsibly.**
